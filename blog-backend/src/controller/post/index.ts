@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import * as ctrl from './ctrl';
+import checkLoggedIn from '../../lib/checkLoggedIn';
 
-const post = Router();
+const router = Router();
 
-post.get('/', ctrl.list);
-post.post('/', ctrl.write);
+router.get('/', ctrl.list);
+router.post('/', checkLoggedIn, ctrl.write);
 
-post.get('/:id', ctrl.checkObjectId, ctrl.read);
-post.delete('/:id', ctrl.checkObjectId, ctrl.remove);
-post.patch('/:id', ctrl.checkObjectId, ctrl.update);
+router.get('/:id', ctrl.getPostById, ctrl.read);
+router.delete('/:id', checkLoggedIn, ctrl.getPostById, ctrl.remove);
+router.patch('/:id', checkLoggedIn, ctrl.getPostById, ctrl.update);
 
-export default post;
+export default router;
