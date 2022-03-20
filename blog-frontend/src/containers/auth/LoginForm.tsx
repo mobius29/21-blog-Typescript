@@ -64,14 +64,13 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (user) {
-      console.log('CHECK API SUCCESS');
-      console.log(user);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user) {
       navigate('/');
+
+      try {
+        localStorage.setItem('user', JSON.stringify(user));
+      } catch (e) {
+        console.log('localStorage is not working');
+      }
     }
   }, [navigate, user]);
 

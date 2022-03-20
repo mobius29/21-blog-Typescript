@@ -6,6 +6,8 @@ export const CHECK = 'user/CHECK' as const;
 export const CHECK_SUCCESS = 'user/CHECK_SUCCESS' as const;
 export const CHECK_FAILURE = 'user/CHECK_FAILURE' as const;
 
+export const LOGOUT = 'user/LOGOUT' as const;
+
 export const tempSetUser = createAction(TEMP_SET_USER)<{
   _id: string;
   username: string;
@@ -19,3 +21,5 @@ export const checkSuccess = createAction(CHECK_SUCCESS)<{
   __v: number;
 }>();
 export const checkFailure = createAction(CHECK_FAILURE)<any>();
+
+export const logout = createAction(LOGOUT)();

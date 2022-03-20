@@ -22,6 +22,10 @@ const reducer = createReducer<State, Action>(initialState, {
     user: null,
     checkError: error,
   }),
+  [actions.LOGOUT]: (state) => ({
+    ...state,
+    user: null,
+  }),
 });
 
 export default reducer;
