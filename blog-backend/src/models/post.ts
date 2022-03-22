@@ -5,7 +5,7 @@ interface IPost {
   body: string;
   tags: [string];
   publishedDate: Date;
-  user?: {
+  user: {
     _id: mongoose.Types.ObjectId;
     username: string;
   };

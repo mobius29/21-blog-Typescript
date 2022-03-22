@@ -14,7 +14,6 @@ export type State = {
   auth: {
     _id: string;
     username: string;
-    __v: number;
   } | null;
   authError: any;
 };

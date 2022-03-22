@@ -22,7 +22,6 @@ export const writePostSuccess = createAction(WRITE_POST_SUCCESS)<{
   user: {
     _id: string;
     username: string;
-    __v: number;
   };
 }>();
 export const writePostFailure = createAction(WRITE_POST_FAILURE)<any>();

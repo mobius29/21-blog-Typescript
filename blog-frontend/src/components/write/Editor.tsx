@@ -35,11 +35,10 @@ const QuillWrapper = styled.div`
 
 interface IProps {
   title: string;
-  body: string;
   onChangeField: ({ key, value }: { key: string; value: string }) => void;
 }
 
-const Editor = ({ title, body, onChangeField }: IProps) => {
+const Editor = ({ title, onChangeField }: IProps) => {
   const quillElement = useRef<HTMLDivElement>(null);
   const quillInstance = useRef<Quill | null>(null);
 
@@ -59,7 +58,7 @@ const Editor = ({ title, body, onChangeField }: IProps) => {
       });
 
       const quill = quillInstance.current;
-      quill.on('text-change', (delta, oldDelta, source: string) => {
+      quill.on('text-change', (delta, oldDelta, source) => {
         if (source === 'user') {
           onChangeField({ key: 'body', value: quill.root.innerHTML });
         }

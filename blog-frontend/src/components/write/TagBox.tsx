@@ -135,7 +135,7 @@ const TagBox = ({ tags, onChangeTags }: IProps) => {
         <input placeholder="Input Tag" value={input} onChange={onChange} />
         <button type="submit">Add</button>
       </TagForm>
-      <TagList tags={['tag1']} onRemove={onRemove} />
+      <TagList tags={tags} onRemove={onRemove} />
     </TagBoxBlock>
   );
 };

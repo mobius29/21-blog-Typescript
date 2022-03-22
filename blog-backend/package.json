@@ -16,7 +16,8 @@
     "express": "^4.17.3",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.7"
+    "mongoose": "^6.2.7",
+    "sanitize-html": "^2.7.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -26,6 +27,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^17.0.21",
+    "@types/sanitize-html": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
     "cookie-parser": "^1.4.6",

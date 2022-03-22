@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { startLoading, finishLoading } from '../modules/loading';
 
-interface Response {
+interface IResponse {
   config?: any;
   data?: any;
   headers?: any;
@@ -10,19 +10,24 @@ interface Response {
   statusText?: string;
 }
 
-const createRequestSaga = (type: string, request: any) => {
-  const SUCCESS = `${type}_SUCCESS` as const;
-  const FAILURE = `${type}_FAILURE` as const;
+interface IAction {
+  type: string;
+  payload?: any;
+}
 
-  return function* (action: any) {
+const createRequestSaga = (type: string, request: any) => {
+  const SUCCESS = `${type}_SUCCESS`;
+  const FAILURE = `${type}_FAILURE`;
+
+  return function* (action: IAction) {
     yield put(startLoading(type));
 
     try {
-      const response: Response = yield call(request, action.payload);
-
+      const response: IResponse = yield call(request, action.payload);
       yield put({
         type: SUCCESS,
         payload: response.data,
+        meta: response,
       });
     } catch (e) {
       yield put({

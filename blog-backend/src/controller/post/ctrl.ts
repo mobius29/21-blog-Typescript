@@ -2,8 +2,38 @@ import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import Post from '../../models/post';
 import Joi from 'joi';
+import sanitizeHTML from 'sanitize-html';
 
 const { ObjectId } = mongoose.Types;
+
+const sanitizeOption = {
+  allowedTags: [
+    'h1',
+    'h2',
+    'b',
+    'i',
+    'u',
+    's',
+    'p',
+    'ul',
+    'ol',
+    'li',
+    'blockquote',
+    'a',
+    'img',
+  ],
+  allowedAttributes: {
+    a: ['href', 'name', 'target'],
+    img: ['src'],
+    li: ['class'],
+  },
+  allowedSchemes: ['data', 'http'],
+};
+
+const removeHtmlAndShorten = (body: string) => {
+  const filtered = sanitizeHTML(body, { allowedTags: [] });
+  return filtered.length < 200 ? filtered : `${filtered.slice(0, 200)}...`;
+};
 
 export const getPostById = async (
   req: Request,
@@ -52,8 +82,9 @@ export const write = async (req: Request, res: Response) => {
   const { title, body, tags } = req.body;
   const post = new Post({
     title,
-    body,
+    body: sanitizeHTML(body, sanitizeOption),
     tags,
+    user: req.user,
   });
 
   try {
@@ -84,19 +115,14 @@ export const list = async (req: Request, res: Response) => {
       .sort({ _id: -1 })
       .limit(10)
       .skip((page - 1) * 10)
+      .lean()
       .exec();
 
     const postCnt = await Post.countDocuments(query).exec();
     res.set('Last-Page', Math.ceil(postCnt / 10).toString());
-
-    const posts_limitedLength = posts
-      .map((post) => post.toJSON())
-      .map((post) => ({
-        ...post,
-        body:
-          post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
-      }));
-    res.send(posts_limitedLength);
+    res.send(
+      posts.map((post) => ({ ...post, body: removeHtmlAndShorten(post.body) })),
+    );
   } catch (e) {
     res.statusCode = 500;
     res.send(e);
@@ -104,6 +130,7 @@ export const list = async (req: Request, res: Response) => {
 };
 
 export const read = (req: Request, res: Response) => {
+  console.log(req);
   res.send(req.post);
 };
 
@@ -137,8 +164,13 @@ export const update = async (req: Request, res: Response) => {
     return;
   }
 
+  const nextData = { ...req.body };
+  if (nextData.body) {
+    nextData.body = sanitizeHTML(nextData.body, sanitizeOption);
+  }
+
   try {
-    const post = await Post.findByIdAndUpdate(id, req.body, {
+    const post = await Post.findByIdAndUpdate(id, nextData, {
       new: true,
     }).exec();
 

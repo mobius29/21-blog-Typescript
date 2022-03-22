@@ -40,7 +40,6 @@ const UserInfo = styled.div`
 interface IProps {
   user: {
     _id: string;
-    __v: number;
     username: string;
   } | null;
   onLogout: () => void;

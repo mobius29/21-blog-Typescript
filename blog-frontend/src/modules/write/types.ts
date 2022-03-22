@@ -10,7 +10,6 @@ export type State = {
     user: {
       _id: string;
       username: string;
-      __v: number;
     };
   } | null;
   postError: any;

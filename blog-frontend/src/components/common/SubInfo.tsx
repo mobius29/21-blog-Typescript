@@ -1,0 +1,42 @@
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
+import palette from '../../lib/styles/palette';
+
+const SubInfoBlock = styled.div<{ hasMarginTop: boolean }>`
+  ${(props) =>
+    props.hasMarginTop &&
+    css`
+      margin-top: 1rem;
+    `}
+
+  color: ${palette.gray[6]};
+
+  span + span:before {
+    color: ${palette.gray[4]};
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+
+    content: '\\B7';
+  }
+`;
+
+interface IProps {
+  username: string;
+  publishedDate: Date;
+  hasMarginTop: boolean;
+}
+
+const SubInfo = ({ username, publishedDate, hasMarginTop }: IProps) => {
+  return (
+    <SubInfoBlock hasMarginTop={hasMarginTop}>
+      <span>
+        <b>
+          <Link to={`/@${username}`}>{username}</Link>{' '}
+        </b>
+      </span>
+      <span>{new Date(publishedDate).toLocaleDateString()}</span>
+    </SubInfoBlock>
+  );
+};
+
+export default SubInfo;

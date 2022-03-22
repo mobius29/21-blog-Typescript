@@ -29,7 +29,6 @@ export const register = createAction(REGISTER)<{
 export const registerSuccess = createAction(REGISTER_SUCCESS)<{
   _id: string;
   username: string;
-  __v: number;
 }>();
 
 export const registerFailure = createAction(REGISTER_FAILURE)<any>();
@@ -42,7 +41,6 @@ export const login = createAction(LOGIN)<{
 export const loginSuccess = createAction(LOGIN_SUCCESS)<{
   _id: string;
   username: string;
-  __v: number;
 }>();
 
 export const loginFailure = createAction(LOGIN_FAILURE)<any>();
