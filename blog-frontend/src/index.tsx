@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './modules/configureStore';
 import { tempSetUser, check } from './modules/user/actions';
+import { HelmetProvider } from 'react-helmet-async';
 
 const store = configureStore();
 
@@ -24,7 +25,9 @@ loadUser();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'),

@@ -8,6 +8,7 @@ const initialState: State = {
   tags: [],
   post: null,
   postError: null,
+  originalPostId: null,
 };
 
 const write = createReducer<State, Action>(initialState, {
@@ -26,6 +27,21 @@ const write = createReducer<State, Action>(initialState, {
     post,
   }),
   [actions.WRITE_POST_FAILURE]: (state, { payload: postError }) => ({
+    ...state,
+    postError,
+  }),
+  [actions.SET_ORIGINAL_POST]: (state, { payload: post }) => ({
+    ...state,
+    title: post.title,
+    body: post.body,
+    tags: post.tags,
+    originalPostId: post._id,
+  }),
+  [actions.UPDATE_POST_SUCCESS]: (state, { payload: post }) => ({
+    ...state,
+    post,
+  }),
+  [actions.UPDATE_POST_FAILURE]: (state, { payload: postError }) => ({
     ...state,
     postError,
   }),

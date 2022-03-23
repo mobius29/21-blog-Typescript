@@ -21,13 +21,14 @@ const StyledButton = styled(Button)`
 interface IProps {
   onCancel: () => void;
   onPublish: () => void;
+  isEdit: boolean;
 }
 
-const WriteActionButtons = ({ onCancel, onPublish }: IProps) => {
+const WriteActionButtons = ({ onCancel, onPublish, isEdit }: IProps) => {
   return (
     <WriteActionButtonsBlock>
       <StyledButton cyan onClick={onPublish}>
-        Post
+        {isEdit ? 'Edit' : 'Post'}
       </StyledButton>
       <StyledButton onClick={onCancel}>Cancel</StyledButton>
     </WriteActionButtonsBlock>

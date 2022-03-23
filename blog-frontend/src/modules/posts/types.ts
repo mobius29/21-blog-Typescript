@@ -1,20 +1,9 @@
 import { ActionType } from 'typesafe-actions';
+import { IPost } from '../../type/post';
 import * as actions from './actions';
 
 export type State = {
-  posts:
-    | {
-        _id: string;
-        title: string;
-        body: string;
-        tags: string[];
-        publishedDate: Date;
-        user: {
-          _id: string;
-          username: string;
-        };
-      }[]
-    | null;
+  posts: IPost[] | null;
   error: any;
   lastPage: number;
 };

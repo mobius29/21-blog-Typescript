@@ -1,8 +1,10 @@
+import React from 'react';
 import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
+import { Helmet } from 'react-helmet-async';
 
 const PostViewerBlock = styled(Responsive)`
   margin-top: 4px;
@@ -27,6 +29,7 @@ const PostContent = styled.div`
 
 interface IProps {
   post: {
+    _id: string;
     title: string;
     body: string;
     tags: string[];
@@ -35,12 +38,13 @@ interface IProps {
       _id: string;
       username: string;
     };
-  };
+  } | null;
   error: any;
   loading: any;
+  actionButtons: false | JSX.Element;
 }
 
-const PostViewer = ({ post, error, loading }: IProps) => {
+const PostViewer = ({ post, error, loading, actionButtons }: IProps) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <PostViewerBlock>The Post does not exist</PostViewerBlock>;
@@ -57,6 +61,9 @@ const PostViewer = ({ post, error, loading }: IProps) => {
 
   return (
     <PostViewerBlock>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       <PostHead>
         <h1>{title}</h1>
         <SubInfo
@@ -66,6 +73,7 @@ const PostViewer = ({ post, error, loading }: IProps) => {
         />
         <Tags tags={tags} />
       </PostHead>
+      {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
     </PostViewerBlock>
   );

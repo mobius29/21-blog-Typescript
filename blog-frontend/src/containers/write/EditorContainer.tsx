@@ -6,8 +6,9 @@ import { RootState } from '../../modules';
 
 const EditorContainer = () => {
   const dispatch = useDispatch();
-  const { title } = useSelector(({ write }: RootState) => ({
+  const { title, body } = useSelector(({ write }: RootState) => ({
     title: write.title,
+    body: write.body,
   }));
 
   const onChangeField = useCallback(
@@ -21,7 +22,7 @@ const EditorContainer = () => {
     };
   }, [dispatch]);
 
-  return <Editor onChangeField={onChangeField} title={title} />;
+  return <Editor onChangeField={onChangeField} title={title} body={body} />;
 };
 
 export default EditorContainer;

@@ -35,10 +35,11 @@ const QuillWrapper = styled.div`
 
 interface IProps {
   title: string;
+  body: string;
   onChangeField: ({ key, value }: { key: string; value: string }) => void;
 }
 
-const Editor = ({ title, onChangeField }: IProps) => {
+const Editor = ({ title, body, onChangeField }: IProps) => {
   const quillElement = useRef<HTMLDivElement>(null);
   const quillInstance = useRef<Quill | null>(null);
 
@@ -69,6 +70,16 @@ const Editor = ({ title, onChangeField }: IProps) => {
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChangeField({ key: 'title', value: e.target.value });
   };
+
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+
+    if (quillInstance.current) {
+      quillInstance.current.root.innerHTML = body;
+    }
+  }, [body]);
 
   return (
     <EditorBlock>

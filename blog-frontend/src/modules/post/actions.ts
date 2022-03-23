@@ -8,6 +8,7 @@ export const UNLOAD_POST = 'post/UNLOAD_POST' as const;
 
 export const readPost = createAction(READ_POST)<string>();
 export const readPostSuccess = createAction(READ_POST_SUCCESS)<{
+  _id: string;
   title: string;
   body: string;
   tags: string[];

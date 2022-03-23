@@ -1,8 +1,9 @@
 import { ActionType } from 'typesafe-actions';
+import { IPost } from '../../type/post';
 import * as actions from './actions';
 
 export type State = {
-  post: any;
+  post: IPost | null;
   error: any;
 };
 

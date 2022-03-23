@@ -30,3 +30,17 @@ export const listPosts = ({
 
   return client.get(`/api/posts?${queryString}`);
 };
+
+export const updatePost = ({
+  id,
+  title,
+  body,
+  tags,
+}: {
+  id: string;
+  title: string;
+  body: string;
+  tags: string[];
+}) => client.patch(`/api/posts/${id}`, { title, body, tags });
+
+export const removePost = (id: string) => client.delete(`/api/posts/${id}`);
